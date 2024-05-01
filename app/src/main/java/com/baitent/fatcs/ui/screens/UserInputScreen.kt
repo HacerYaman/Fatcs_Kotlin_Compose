@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.baitent.fatcs.R
 import com.baitent.fatcs.ui.AnimalCard
 import com.baitent.fatcs.ui.AppConstants
+import com.baitent.fatcs.ui.ButtonComponent
 import com.baitent.fatcs.ui.TextComponent
 import com.baitent.fatcs.ui.TextFieldComponent
 import com.baitent.fatcs.ui.TopBar
@@ -52,22 +53,34 @@ fun UserInputScreen(userInputViewModel: UserInputViewModel) {
 
 
             Row(modifier = Modifier.fillMaxWidth()) {
-                AnimalCard(image = R.drawable.cat, selectAnimal = {
-                    userInputViewModel.onEvent(
-                        UserDataUiEvents.AnimalSelected(it)
-                    )
-                }, isSelected = userInputViewModel.uiState.value
-                    .animalSelected=="Cat")
-                AnimalCard(image = R.drawable.dog, selectAnimal = {
-                    userInputViewModel.onEvent(
-                        UserDataUiEvents.AnimalSelected(it)
-                    )
-                }, isSelected = userInputViewModel.uiState.value
-                    .animalSelected=="Dog")
+                AnimalCard(
+                    image = R.drawable.cat, selectAnimal = {
+                        userInputViewModel.onEvent(
+                            UserDataUiEvents.AnimalSelected(it)
+                        )
+                    }, isSelected = userInputViewModel.uiState.value
+                        .animalSelected == "Cat"
+                )
+                AnimalCard(
+                    image = R.drawable.dog, selectAnimal = {
+                        userInputViewModel.onEvent(
+                            UserDataUiEvents.AnimalSelected(it)
+                        )
+                    }, isSelected = userInputViewModel.uiState.value
+                        .animalSelected == "Dog"
+                )
             }
 
-        }
+            Spacer(modifier = Modifier.weight(1f))
 
+            if (userInputViewModel.isValidState()) {
+                ButtonComponent(
+                    goToDetailScreen = {
+                        
+                    }
+                )
+            }
+        }
     }
 }
 

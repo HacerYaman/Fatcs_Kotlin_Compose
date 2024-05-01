@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -102,14 +103,12 @@ fun TextFieldComponent(
 
         },
         modifier = Modifier.fillMaxWidth(),
-        keyboardActions = KeyboardActions {
-        },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
         ),
-        //keyboardActions = KeyboardActions {
-        //    localFocusManager.clearFocus()
-        //},
+        keyboardActions = KeyboardActions {
+            localFocusManager.clearFocus()
+        },
         placeholder = {
             Text(text = "Enter your name..", fontSize = 18.sp)
         },
@@ -127,6 +126,9 @@ fun TextFieldComponentPreview() {
 
 @Composable
 fun AnimalCard(image: Int, isSelected: Boolean, selectAnimal: (animalName: String) -> Unit) {
+
+    val localFocusManager = LocalFocusManager.current
+
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(4.dp),
@@ -151,8 +153,9 @@ fun AnimalCard(image: Int, isSelected: Boolean, selectAnimal: (animalName: Strin
                     .wrapContentWidth()
                     .wrapContentHeight()
                     .clickable {
-                        val animalName = if(image == R.drawable.cat) "Cat" else "Dog"
+                        val animalName = if (image == R.drawable.cat) "Cat" else "Dog"
                         selectAnimal(animalName)
+                        localFocusManager.clearFocus()
                     },
                 painter = painterResource(id = image),
                 contentDescription = "Cat"
@@ -167,4 +170,16 @@ fun AnimalCard(image: Int, isSelected: Boolean, selectAnimal: (animalName: Strin
 @Composable
 fun AnimalCardPreview() {
     AnimalCard(R.drawable.cat, true, {})
+}
+
+@Composable
+fun ButtonComponent(goToDetailScreen: () -> Unit) {
+    Button(
+        onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth(),
+    ) {
+        TextComponent(
+            textValue = "Go to Details Screen",
+            textSize = 18.sp, color = Color.White
+        )
+    }
 }
